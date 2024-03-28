@@ -43,5 +43,5 @@ OPENAI_API_KEY='xxxxxxxxxx'
 ```sh
 .venv\Scripts\activate.bat
 pip install -r requirements.txt
-streamlit run Chatbot.py
+streamlit run Home_page.py
 ```

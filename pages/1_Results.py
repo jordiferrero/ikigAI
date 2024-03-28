@@ -16,8 +16,13 @@ st.caption(
 st.markdown(
     r"Your AI assistant has helped you find your ikigai. Here are your results."
 )
-
-results_df = st.session_state["ikigai_df"]
+try:
+    results_df = st.session_state["ikigai_df"]
+except KeyError:
+    st.warning(
+        "Please first run a call to the ikigai method in the Main page [here](../Home_page.py)."
+    )
+    st.stop()
 
 
 def create_data_dashboard(df_row, parent_container=None):
