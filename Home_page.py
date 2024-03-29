@@ -2,7 +2,7 @@ import json
 import time
 import streamlit as st
 import os
-from prompts import input_to_jobs
+from app.prompts import input_to_jobs
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
 import pandas as pd
@@ -93,7 +93,7 @@ with st.expander(":wrench: Parameters"):
     response_len = cols[2].select_slider(
         "Response length",
         options=["Short", "Medium", "Long"],
-        value="Short",
+        value="Medium",
         key="max_tokens",
     )
     length_to_tokens = {

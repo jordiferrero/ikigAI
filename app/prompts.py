@@ -11,6 +11,7 @@ input_to_jobs = """
     - "skills": Matches to "What you're good at" (user inputs)
     - "economy": Matches to "What you can be paid for" (user inputs)
     - "society": Matches to "What the world needs" (user inputs)
+    - "job_description": A short 1-sentence description of the job
   4. Fill each column corresponding to the user's inputs. If user input from any column category is absent, do not inlcude the category in the table.
   5. Aim to propose a diverse range of careers, enriching the user's exploration journey. Be creative and accurate. Return at least 10 options or more.
 
@@ -28,8 +29,8 @@ input_to_jobs = """
 
   #### Output (FOLLOW THIS FORMAT):
   [
-      {{ "job_title": "Child Life Specialist", "love": ["Working with children"], "skills": ["Communication", "Problem-solving"], "society": ["Mental health awareness"] }},
-      {{ "job_title": "Art Therapist", "love": ["Creativity"], "skills": ["Communication"], "society": ["Mental health awareness"] }},
+      {{ "job_title": "Child Life Specialist", "love": ["Working with children"], "skills": ["Communication", "Problem-solving"], "society": ["Mental health awareness"], "job_description": "Helps with child care." }},
+      {{ "job_title": "Art Therapist", "love": ["Creativity"], "skills": ["Communication"], "society": ["Mental health awareness"], "job_description": "Helps with mental health issues using art." }},
   ]
 
   Continue listing as many career opportunities as meet the criteria based on the user's provided traits. List at least 10 career options.

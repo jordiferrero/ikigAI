@@ -1,4 +1,5 @@
 streamlit>=1.28
+streamlit-extras
 langchain>=0.0.217
 langchain_openai
 openai>=1.2
