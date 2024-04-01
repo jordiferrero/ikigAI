@@ -6,8 +6,10 @@ from app.prompts import input_to_jobs
 from langchain_openai import ChatOpenAI
 from langchain_core.prompts import ChatPromptTemplate
 import pandas as pd
-from langchain.output_parsers import PandasDataFrameOutputParser
+
+# from langchain.output_parsers import PandasDataFrameOutputParser
 from langchain_core.output_parsers import StrOutputParser
+
 
 st.set_page_config(
     page_title="IkigAI - Main page",
@@ -55,18 +57,34 @@ placeholders = [
 ]
 user_input = {k: "" for k in input_topics}
 cols = st.columns([1, 1], gap="large")
+
+if "widgets_state" not in st.session_state:
+    st.session_state["widgets_state"] = {}
+
+
+def store_state(key, user_input):
+    st.session_state.widgets_state[key] = user_input[key]
+
+
 for i, (k, v) in enumerate(user_input.items()):
     if i % 2 == 0:
         col = cols[0]
     else:
         col = cols[1]
 
+    if k not in st.session_state.widgets_state:
+        print(f"Setting {k} to empty string")
+        st.session_state.widgets_state[k] = ""
+
     user_input[k] = col.text_area(
         label=k,
+        value=st.session_state.widgets_state[k],
         placeholder=placeholders[i],
         key=f"{k}",
         height=150,
     )
+
+    store_state(k, user_input)
 
 with st.expander(":wrench: Parameters"):
     cols = st.columns(3)
