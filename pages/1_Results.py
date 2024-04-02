@@ -25,7 +25,7 @@ st.set_page_config(
 def fetch_images(df):
     def search_text_to_image_url(job_title_str):
         # Search for image:
-        search_text = job_title_str + " career"
+        search_text = job_title_str
         try:
             most_relevant_image_url = get_most_relevant_image(
                 search_text, PEXELS_API_KEY
@@ -43,12 +43,12 @@ def fetch_images(df):
     return df
 
 
-def create_data_dashboard(df_row, _parent_container=None):
+def create_data_dashboard(df_row, parent_container=None):
     # Create a Streamlit container to hold all the information
-    if _parent_container is None:
+    if parent_container is None:
         container = st.container(border=True)
     else:
-        container = _parent_container.container(border=True)
+        container = parent_container.container(border=True)
 
     # Display metadata information
     with container:
@@ -72,13 +72,13 @@ def create_data_dashboard(df_row, _parent_container=None):
 
         st.caption("Matched traits:")
         cols = st.columns([1, 1], gap="small")
-        if not isinstance(df_row["love"], list):
+        if "love" not in df_row.keys() or not isinstance(df_row["love"], list):
             df_row["love"] = ["--"]
-        if not isinstance(df_row["skills"], list):
+        if "skills" not in df_row.keys() or not isinstance(df_row["skills"], list):
             df_row["skills"] = ["--"]
-        if not isinstance(df_row["economy"], list):
+        if "economy" not in df_row.keys() or not isinstance(df_row["economy"], list):
             df_row["economy"] = ["--"]
-        if not isinstance(df_row["society"], list):
+        if "society" not in df_row.keys() or not isinstance(df_row["society"], list):
             df_row["society"] = ["--"]
 
         cols[0].dataframe(
@@ -137,17 +137,18 @@ cols = tabs[0].columns([0.5, 0.5], gap="small")
 
 for i, row in results_df.iterrows():
     n = 0 if i % 2 == 0 else 1
-    create_data_dashboard(row, _parent_container=cols[n])
+    create_data_dashboard(row, parent_container=cols[n])
 
 tabs[1].dataframe(
     results_df,
+    use_container_width=True,
     column_order=["job_title", "love", "skills", "economy", "society", "job_img"],
     column_config={
-        "job_title": "Job name",
-        "love": "❤️",
-        "skills": "👍",
-        "economy": "💰",
-        "society": "🌍",
+        "job_title": st.column_config.Column("Job name", width="small"),
+        "love": st.column_config.Column("❤️", width="small"),
+        "skills": st.column_config.Column("👍", width="small"),
+        "economy": st.column_config.Column("💰", width="small"),
+        "society": st.column_config.Column("🌍", width="small"),
         "job_img": st.column_config.ImageColumn("Image", width="small"),
     },
     hide_index=True,
